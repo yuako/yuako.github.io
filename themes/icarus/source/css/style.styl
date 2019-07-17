@@ -14,11 +14,6 @@ html
 
 body
     background-color: #f7f7f7
-    // background: url("https://home.magpi.com/wp-content/uploads/2016/03/Background-net-crated-by-turquoise-triangles-000037520480_XXXLarge.jpg") no-repeat 100% 100%;
-    // height:100%;
-    // width:100%;
-    // overflow: hidden;
-    // background-size: cover;
 
 body, button, input, select, textarea
     font-family: family-sans
@@ -422,21 +417,29 @@ figure.highlight
         display: block
 
 /* ---------------------------------
- *        Fix Video
+ *          Overflow Table
  * --------------------------------- */
-.video-container {
-	position: relative;
-	padding-bottom: 56.25%;
-	padding-top: 25px;
-	height: 0;
-}
-.video-container iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
+.table-overflow
+    overflow-x: auto
+    table
+        width: auto!important
+        th
+            word-break: keep-all
+
+/* ---------------------------------
+ *            Fix Video
+ * --------------------------------- */
+.video-container
+    position: relative
+    padding-bottom: 56.25%
+    padding-top: 25px
+    height: 0
+    iframe
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
 
 /* ---------------------------------
  *        Fix Gist Snippet
