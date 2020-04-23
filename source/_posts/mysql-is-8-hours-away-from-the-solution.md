@@ -9,7 +9,7 @@ categories:
 
 1. 修改连接池
 ```
-jdbc:mysql://localhost:3306/dcoj?serverTimezone=Asia/Shanghai
+jdbc:mysql://localhost:3306/<数据库名称>?serverTimezone=Asia/Shanghai
 ```
 
 2. 修改Mysql配置
