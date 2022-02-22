@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>es查询某个字段空或非空</title>
+    <url>/posts/586654492/</url>
+    <content><![CDATA[<h3 id="查询出没有该字段的文档"><a href="#查询出没有该字段的文档" class="headerlink" title="查询出没有该字段的文档"></a>查询出没有该字段的文档</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;exists&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;字段名称&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询字段值为空字符串"><a href="#查询字段值为空字符串" class="headerlink" title="查询字段值为空字符串"></a>查询字段值为空字符串</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;字段名称&quot;</span>: &#123;</span><br><span class="line">              <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询字段值不为空字符串的文档"><a href="#查询字段值不为空字符串的文档" class="headerlink" title="查询字段值不为空字符串的文档"></a>查询字段值不为空字符串的文档</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;字段名称&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>elasticsearch</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>golang关键字defer使用</title>
+    <url>/posts/4082217715/</url>
+    <content><![CDATA[<h3 id="defer关键词规则"><a href="#defer关键词规则" class="headerlink" title="defer关键词规则"></a>defer关键词规则</h3><ul>
+<li>规则一：延迟函数的参数在defer语句出现时就已经确定下来了（因为会有拷贝）</li>
+<li>规则二：延迟函数执行按后进先出顺序执行，即先出现的defer最后执行（filo，栈操作）</li>
+<li>规则三：延迟函数可能操作主函数的”具名”返回值<ul>
+<li>对于指针类型参数，规则仍然适用，只不过延迟函数的参数是一个地址值，</li>
+<li>这种情况下，defer后面的语句对变量的修改可能会影响延迟函数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">variableDemo1</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++ &#123;</span><br><span class="line">		<span class="comment">//i会进行一次拷贝到t，所以能正常打印数据</span></span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;t = %d \n&quot;</span>, t)</span><br><span class="line">		&#125;(i)</span><br><span class="line"></span><br><span class="line">		<span class="comment">//这里只会输出6，因为i在defer已经执行完循环，i指向都是最终值</span></span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;t2 = %d \n&quot;</span>, i)</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回前执行defer，此时t=2，++后返回3</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnVariableDemo1</span><span class="params">()</span> <span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		t++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回前执行defer，但是无法赋值结果，无返回t变量，返回的是2</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnVariableDemo2</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	t := <span class="number">2</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		t++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">variableDemo2</span><span class="params">()</span> <span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">//这里传入的t是初始值只0，defer开始时就拷贝0到i，第二个输出t是ret前赋值为2，所以是2</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;variableDemo2 i = &quot;</span>, i) <span class="comment">// 0</span></span><br><span class="line">		fmt.Println(<span class="string">&quot;variableDemo2 t = &quot;</span>, t) <span class="comment">// 2</span></span><br><span class="line">	&#125;(t)</span><br><span class="line">	t = <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>defer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java中Map遍历的四种方法</title>
+    <url>/posts/1314230304/</url>
+    <content><![CDATA[<p>在java中所有的map都实现了Map接口，因此所有的Map（如HashMap, TreeMap, LinkedHashMap, Hashtable等）都可以用以下的方式去遍历。</p>
+<p>方法一：在for循环中使用entries实现Map的遍历：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 最常见也是大多数情况下用的最多的，一般在键值对都需要使用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Map &lt;String,String&gt;map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;熊大&quot;</span>, <span class="string">&quot;棕色&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;熊二&quot;</span>, <span class="string">&quot;黄色&quot;</span>);</span><br><span class="line"><span class="keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;</span><br><span class="line">    String mapKey = entry.getKey();</span><br><span class="line">    String mapValue = entry.getValue();</span><br><span class="line">    System.out.println(mapKey+<span class="string">&quot;:&quot;</span>+mapValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：在for循环中遍历key或者values，一般适用于只需要map中的key或者value时使用，在性能上比使用entrySet较好；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map &lt;String,String&gt;map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;熊大&quot;</span>, <span class="string">&quot;棕色&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;熊二&quot;</span>, <span class="string">&quot;黄色&quot;</span>);</span><br><span class="line"><span class="comment">//key</span></span><br><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    System.out.println(key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//value</span></span><br><span class="line"><span class="keyword">for</span>(String value : map.values())&#123;</span><br><span class="line">    System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：通过Iterator遍历；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Iterator&lt;Entry&lt;String, String&gt;&gt; entries = map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span>(entries.hasNext())&#123;</span><br><span class="line">    Entry&lt;String, String&gt; entry = entries.next();</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    String value = entry.getValue();</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法四：通过键找值遍历，这种方式的效率比较低，因为本身从键取值是耗时的操作；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    String value = map.get(key);</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>map</tag>
+      </tags>
+  </entry>
+</search>
