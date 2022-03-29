@@ -23,26 +23,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yuako.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-  <meta name="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
+  <meta name="description" content="安装工具最简单的方式1$ go get -u golang.org&#x2F;x&#x2F;tool&#x2F;...  替代方式1$ GO111MODULE&#x3D;on go get golang.org&#x2F;x&#x2F;tool&#x2F;cmd&#x2F;stress  环境变量1234$ go env$ go env GOPATH GOO GOARCH$ go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct$ go hel">
 <meta property="og:type" content="website">
-<meta property="og:title" content="大岭">
-<meta property="og:url" content="https://yuako.github.com/index.html">
+<meta property="og:title" content="go-command">
+<meta property="og:url" content="https://yuako.github.com/posts/582908711/index.html">
 <meta property="og:site_name" content="大岭">
-<meta property="og:description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
+<meta property="og:description" content="安装工具最简单的方式1$ go get -u golang.org&#x2F;x&#x2F;tool&#x2F;...  替代方式1$ GO111MODULE&#x3D;on go get golang.org&#x2F;x&#x2F;tool&#x2F;cmd&#x2F;stress  环境变量1234$ go env$ go env GOPATH GOO GOARCH$ go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct$ go hel">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-23T07:31:00.000Z">
+<meta property="article:modified_time" content="2022-02-23T07:42:05.939Z">
 <meta property="article:author" content="Yu">
 <meta property="article:tag" content="java golang php python">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yuako.github.com/">
+<link rel="canonical" href="https://yuako.github.com/posts/582908711/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yuako.github.com/posts/582908711/","path":"posts/582908711/","title":"go-command"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>大岭</title>
+<title>go-command | 大岭</title>
   
 
 
@@ -72,7 +74,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">大岭</h1>
+      <p class="site-title">大岭</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">藏书阁</p>
@@ -135,7 +137,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -148,6 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">安装工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">最简单的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%BF%E4%BB%A3%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">替代方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">运行代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-Go-%E6%96%87%E6%A1%A3"><span class="nav-number">2.2.</span> <span class="nav-text">查看 Go 文档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing"><span class="nav-number">3.</span> <span class="nav-text">Testing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.1.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Profiling-Test-Coverage"><span class="nav-number">3.2.</span> <span class="nav-text">Profiling Test Coverage</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">压力测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Testing-all-dependencies"><span class="nav-number">4.1.</span> <span class="nav-text">Testing all dependencies</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E5%89%8D%E6%A3%80%E6%9F%A5"><span class="nav-number">5.</span> <span class="nav-text">提交前检查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.</span> <span class="nav-text">格式化代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-vet-%E8%BF%9B%E8%A1%8C%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">5.2.</span> <span class="nav-text">通过 vet 进行静态分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%A7%E7%9A%84%E5%88%86%E6%9E%90%E5%99%A8"><span class="nav-number">5.3.</span> <span class="nav-text">实验性的分析器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%97%B6%E7%A6%81%E7%94%A8-vet-%E5%B7%A5%E5%85%B7"><span class="nav-number">5.4.</span> <span class="nav-text">测试时禁用 vet 工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E7%90%86%E4%BB%A3%E7%A0%81%EF%BC%88LintingCode%EF%BC%89"><span class="nav-number">5.5.</span> <span class="nav-text">整理代码（LintingCode）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E7%90%86%E5%92%8C%E9%AA%8C%E8%AF%81%E4%BE%9D%E8%B5%96"><span class="nav-number">5.6.</span> <span class="nav-text">整理和验证依赖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E9%83%A8%E7%BD%B2"><span class="nav-number">6.</span> <span class="nav-text">编译和部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="nav-number">6.1.</span> <span class="nav-text">编译可执行文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%BC%93%E5%AD%98"><span class="nav-number">6.2.</span> <span class="nav-text">编译缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">6.3.</span> <span class="nav-text">编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="nav-number">6.4.</span> <span class="nav-text">交叉编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E5%99%A8%E5%92%8C%E9%93%BE%E6%8E%A5%E5%99%A8-flags"><span class="nav-number">6.5.</span> <span class="nav-text">使用编译器和链接器 flags</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E5%92%8C%E4%BC%98%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">问题诊断和优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E6%AF%94%E8%BE%83%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="nav-number">7.1.</span> <span class="nav-text">运行和比较基准测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">7.2.</span> <span class="nav-text">比较基准测试的变化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Profiling-and-Tracing"><span class="nav-number">8.</span> <span class="nav-text">Profiling and Tracing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E6%AF%94%E8%BE%83%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95-1"><span class="nav-number">8.1.</span> <span class="nav-text">运行和比较基准测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tracing-%E7%94%9F%E6%88%90"><span class="nav-number">8.2.</span> <span class="nav-text">Tracing 生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%9E%E6%80%81%E6%9D%A1%E4%BB%B6%E6%A3%80%E6%9F%A5"><span class="nav-number">8.3.</span> <span class="nav-text">竞态条件检查</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%EF%BC%88Module%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">依赖管理（Module）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E6%9B%B4%E6%96%B0"><span class="nav-number">9.1.</span> <span class="nav-text">项目依赖更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%8D%87%E7%BA%A7%E6%88%96%E9%99%8D%E7%BA%A7"><span class="nav-number">9.2.</span> <span class="nav-text">依赖升级或降级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%89%80%E6%9C%89%E5%8C%85%E7%9A%84%E5%85%A8%E9%83%A8%E6%B5%8B%E8%AF%95%E6%A3%80%E9%AA%8C%E4%B8%8D%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">9.3.</span> <span class="nav-text">运行所有包的全部测试检验不兼容性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%9D%E8%B5%96%E7%9A%84%E6%9C%AC%E5%9C%B0%E7%89%88%E6%9C%AC"><span class="nav-number">9.4.</span> <span class="nav-text">使用依赖的本地版本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">10.</span> <span class="nav-text">其他工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7%E4%BB%A3%E7%A0%81%E5%88%B0-Go-%E6%96%B0%E7%89%88%E6%9C%AC"><span class="nav-number">10.1.</span> <span class="nav-text">升级代码到 Go 新版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E5%91%8A-Bug"><span class="nav-number">10.2.</span> <span class="nav-text">报告 Bug</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -199,160 +202,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/173324241/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yu">
-      <meta itemprop="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大岭">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/173324241/" class="post-title-link" itemprop="url">缓存系统的三大问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一、缓存穿透"><a href="#一、缓存穿透" class="headerlink" title="一、缓存穿透"></a>一、缓存穿透</h3><ul>
-<li>数据库和缓存中都没有数据，用户每次查询都查询数据库但是没法写入到缓存</li>
-<li>查询的KEY不存在，例如id:-1</li>
-</ul>
-<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><ul>
-<li>过滤不正常的参数key</li>
-<li>将查询空的结果设置短时间的key-null缓存</li>
-</ul>
-<h3 id="二、缓存击穿"><a href="#二、缓存击穿" class="headerlink" title="二、缓存击穿"></a>二、缓存击穿</h3><ul>
-<li>数据库中有数据，但是缓存没有，首次请求或者是缓存的KEY过期</li>
-</ul>
-<h4 id="解决方法：-1"><a href="#解决方法：-1" class="headerlink" title="解决方法："></a>解决方法：</h4><ul>
-<li>限流、熔断、降级</li>
-<li>key不过期（注意使用）</li>
-<li>佈隆过滤器，快速查询key是否存在</li>
-<li>互斥锁（常用）</li>
-</ul>
-<h3 id="三、缓存雪崩"><a href="#三、缓存雪崩" class="headerlink" title="三、缓存雪崩"></a>三、缓存雪崩</h3><ul>
-<li>缓存中大批量数据过期</li>
-</ul>
-<h4 id="解决方法：-2"><a href="#解决方法：-2" class="headerlink" title="解决方法："></a>解决方法：</h4><ul>
-<li>缓存数据随机时间</li>
-<li>分散缓存到不同缓存系统</li>
-<li>key不过期</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">(String key, Callable&lt;? extends T&gt; loader)</span> </span>&#123;</span><br><span class="line">    String cache = redisHelper.get(key);</span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isNotBlank(cache)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;null&quot;</span>.equals(cache)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> JSONObject.parseObject(cache, <span class="keyword">this</span>.entityClass);</span><br><span class="line">    &#125;</span><br><span class="line">    String lockKey = <span class="string">&quot;lock:&quot;</span> + key;</span><br><span class="line">    String lockVal = String.valueOf(RandomUtils.nextInt(<span class="number">1000</span>, <span class="number">9999</span>));</span><br><span class="line">    <span class="comment">//通过加锁防止击穿</span></span><br><span class="line">    <span class="keyword">if</span> (redisHelper.lock(lockKey, lockVal, CustomSystemTime.THREE_SECOND, TimeUnit.SECONDS)) &#123;</span><br><span class="line">        T entity = loader.call();</span><br><span class="line">        <span class="keyword">if</span> (entity != <span class="keyword">null</span>) &#123;</span><br><span class="line">            redisHelper.set(key, JsonHelper.toJson(entity), CustomSystemTime.ONEHOURSECONDS);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//防止缓存穿透</span></span><br><span class="line">            redisHelper.set(key, <span class="string">&quot;null&quot;</span>, CustomSystemTime.THREE_SECOND);</span><br><span class="line">        &#125;</span><br><span class="line">        redisHelper.unlock(lockKey, lockVal);</span><br><span class="line">        <span class="keyword">return</span> entity;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        TimeUnit.MILLISECONDS.sleep(RandomUtils.nextInt(<span class="number">100</span>, <span class="number">200</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.get(key, loader);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/1311315085/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yu">
-      <meta itemprop="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大岭">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/1311315085/" class="post-title-link" itemprop="url">go-context</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/582908711/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -365,9 +225,9 @@
       <meta itemprop="name" content="大岭">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/582908711/" class="post-title-link" itemprop="url">go-command</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          go-command
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -382,7 +242,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h3><h4 id="最简单的方式"><a href="#最简单的方式" class="headerlink" title="最简单的方式"></a>最简单的方式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get -u golang.org/x/tool/...</span><br></pre></td></tr></table></figure>
+        <h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h3><h4 id="最简单的方式"><a href="#最简单的方式" class="headerlink" title="最简单的方式"></a>最简单的方式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get -u golang.org/x/tool/...</span><br></pre></td></tr></table></figure>
 
 <h4 id="替代方式"><a href="#替代方式" class="headerlink" title="替代方式"></a>替代方式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ GO111MODULE=on go get golang.org/x/tool/cmd/stress</span><br></pre></td></tr></table></figure>
 
@@ -443,7 +303,6 @@
 <h3 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h3><h4 id="升级代码到-Go-新版本"><a href="#升级代码到-Go-新版本" class="headerlink" title="升级代码到 Go 新版本"></a>升级代码到 Go 新版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go fix ./... </span><br></pre></td></tr></table></figure>
 
 <h4 id="报告-Bug"><a href="#报告-Bug" class="headerlink" title="报告 Bug"></a>报告 Bug</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go bug <span class="comment"># 会打开浏览器，定位 Go 代码仓库的 issue 页面</span></span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
@@ -451,227 +310,25 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/586654492/" rel="prev" title="es查询某个字段空或非空">
+                  <i class="fa fa-chevron-left"></i> es查询某个字段空或非空
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/1311315085/" rel="next" title="go-context">
+                  go-context <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/586654492/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yu">
-      <meta itemprop="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大岭">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/586654492/" class="post-title-link" itemprop="url">es查询某个字段空或非空</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="查询出没有该字段的文档"><a href="#查询出没有该字段的文档" class="headerlink" title="查询出没有该字段的文档"></a>查询出没有该字段的文档</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;exists&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;字段名称&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="查询字段值为空字符串"><a href="#查询字段值为空字符串" class="headerlink" title="查询字段值为空字符串"></a>查询字段值为空字符串</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;字段名称&quot;</span>: &#123;</span><br><span class="line">              <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="查询字段值不为空字符串的文档"><a href="#查询字段值不为空字符串的文档" class="headerlink" title="查询字段值不为空字符串的文档"></a>查询字段值不为空字符串的文档</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;字段名称&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/4082217715/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yu">
-      <meta itemprop="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大岭">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/4082217715/" class="post-title-link" itemprop="url">golang关键字defer使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/golang/" itemprop="url" rel="index"><span itemprop="name">golang</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="defer关键词规则"><a href="#defer关键词规则" class="headerlink" title="defer关键词规则"></a>defer关键词规则</h3><ul>
-<li>规则一：延迟函数的参数在defer语句出现时就已经确定下来了（因为会有拷贝）</li>
-<li>规则二：延迟函数执行按后进先出顺序执行，即先出现的defer最后执行（filo，栈操作）</li>
-<li>规则三：延迟函数可能操作主函数的”具名”返回值<ul>
-<li>对于指针类型参数，规则仍然适用，只不过延迟函数的参数是一个地址值，</li>
-<li>这种情况下，defer后面的语句对变量的修改可能会影响延迟函数。</li>
-</ul>
-</li>
-</ul>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">variableDemo1</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++ &#123;</span><br><span class="line">		<span class="comment">//i会进行一次拷贝到t，所以能正常打印数据</span></span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;t = %d \n&quot;</span>, t)</span><br><span class="line">		&#125;(i)</span><br><span class="line"></span><br><span class="line">		<span class="comment">//这里只会输出6，因为i在defer已经执行完循环，i指向都是最终值</span></span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;t2 = %d \n&quot;</span>, i)</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回前执行defer，此时t=2，++后返回3</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnVariableDemo1</span><span class="params">()</span> <span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		t++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回前执行defer，但是无法赋值结果，无返回t变量，返回的是2</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnVariableDemo2</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	t := <span class="number">2</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		t++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">variableDemo2</span><span class="params">()</span> <span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">//这里传入的t是初始值只0，defer开始时就拷贝0到i，第二个输出t是ret前赋值为2，所以是2</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;variableDemo2 i = &quot;</span>, i) <span class="comment">// 0</span></span><br><span class="line">		fmt.Println(<span class="string">&quot;variableDemo2 t = &quot;</span>, t) <span class="comment">// 2</span></span><br><span class="line">	&#125;(t)</span><br><span class="line">	t = <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/1314230304/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yu">
-      <meta itemprop="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大岭">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/1314230304/" class="post-title-link" itemprop="url">java中Map遍历的四种方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在java中所有的map都实现了Map接口，因此所有的Map（如HashMap, TreeMap, LinkedHashMap, Hashtable等）都可以用以下的方式去遍历。</p>
-<p>方法一：在for循环中使用entries实现Map的遍历：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 最常见也是大多数情况下用的最多的，一般在键值对都需要使用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Map &lt;String,String&gt;map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;熊大&quot;</span>, <span class="string">&quot;棕色&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;熊二&quot;</span>, <span class="string">&quot;黄色&quot;</span>);</span><br><span class="line"><span class="keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;</span><br><span class="line">    String mapKey = entry.getKey();</span><br><span class="line">    String mapValue = entry.getValue();</span><br><span class="line">    System.out.println(mapKey+<span class="string">&quot;:&quot;</span>+mapValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>方法二：在for循环中遍历key或者values，一般适用于只需要map中的key或者value时使用，在性能上比使用entrySet较好；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Map &lt;String,String&gt;map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;熊大&quot;</span>, <span class="string">&quot;棕色&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;熊二&quot;</span>, <span class="string">&quot;黄色&quot;</span>);</span><br><span class="line"><span class="comment">//key</span></span><br><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    System.out.println(key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//value</span></span><br><span class="line"><span class="keyword">for</span>(String value : map.values())&#123;</span><br><span class="line">    System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>方法三：通过Iterator遍历；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Entry&lt;String, String&gt;&gt; entries = map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span>(entries.hasNext())&#123;</span><br><span class="line">    Entry&lt;String, String&gt; entry = entries.next();</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    String value = entry.getValue();</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>方法四：通过键找值遍历，这种方式的效率比较低，因为本身从键取值是耗时的操作；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    String value = map.get(key);</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
