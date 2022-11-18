@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yuako.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="安装工具最简单的方式1$ go get -u golang.org&#x2F;x&#x2F;tool&#x2F;...  替代方式1$ GO111MODULE&#x3D;on go get golang.org&#x2F;x&#x2F;tool&#x2F;cmd&#x2F;stress  环境变量1234$ go env$ go env GOPATH GOO GOARCH$ go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct$ go hel">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Go常用命令">
+<meta property="og:url" content="https://yuako.github.com/posts/582908711/index.html">
+<meta property="og:site_name" content="大岭">
+<meta property="og:description" content="安装工具最简单的方式1$ go get -u golang.org&#x2F;x&#x2F;tool&#x2F;...  替代方式1$ GO111MODULE&#x3D;on go get golang.org&#x2F;x&#x2F;tool&#x2F;cmd&#x2F;stress  环境变量1234$ go env$ go env GOPATH GOO GOARCH$ go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct$ go hel">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-23T07:31:00.000Z">
+<meta property="article:modified_time" content="2022-08-09T03:54:19.141Z">
+<meta property="article:author" content="Yu">
+<meta property="article:tag" content="java golang php python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yuako.github.com/posts/582908711/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yuako.github.com/posts/582908711/","path":"posts/582908711/","title":"Go常用命令"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Go常用命令 | 大岭</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">大岭</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">藏书阁</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">安装工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">最简单的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%BF%E4%BB%A3%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">替代方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">运行代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-Go-%E6%96%87%E6%A1%A3"><span class="nav-number">2.2.</span> <span class="nav-text">查看 Go 文档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing"><span class="nav-number">3.</span> <span class="nav-text">Testing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.1.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Profiling-Test-Coverage"><span class="nav-number">3.2.</span> <span class="nav-text">Profiling Test Coverage</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">压力测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Testing-all-dependencies"><span class="nav-number">4.1.</span> <span class="nav-text">Testing all dependencies</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E5%89%8D%E6%A3%80%E6%9F%A5"><span class="nav-number">5.</span> <span class="nav-text">提交前检查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.</span> <span class="nav-text">格式化代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-vet-%E8%BF%9B%E8%A1%8C%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">5.2.</span> <span class="nav-text">通过 vet 进行静态分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%A7%E7%9A%84%E5%88%86%E6%9E%90%E5%99%A8"><span class="nav-number">5.3.</span> <span class="nav-text">实验性的分析器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%97%B6%E7%A6%81%E7%94%A8-vet-%E5%B7%A5%E5%85%B7"><span class="nav-number">5.4.</span> <span class="nav-text">测试时禁用 vet 工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E7%90%86%E4%BB%A3%E7%A0%81%EF%BC%88LintingCode%EF%BC%89"><span class="nav-number">5.5.</span> <span class="nav-text">整理代码（LintingCode）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E7%90%86%E5%92%8C%E9%AA%8C%E8%AF%81%E4%BE%9D%E8%B5%96"><span class="nav-number">5.6.</span> <span class="nav-text">整理和验证依赖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E9%83%A8%E7%BD%B2"><span class="nav-number">6.</span> <span class="nav-text">编译和部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="nav-number">6.1.</span> <span class="nav-text">编译可执行文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%BC%93%E5%AD%98"><span class="nav-number">6.2.</span> <span class="nav-text">编译缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">6.3.</span> <span class="nav-text">编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="nav-number">6.4.</span> <span class="nav-text">交叉编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E5%99%A8%E5%92%8C%E9%93%BE%E6%8E%A5%E5%99%A8-flags"><span class="nav-number">6.5.</span> <span class="nav-text">使用编译器和链接器 flags</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E5%92%8C%E4%BC%98%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">问题诊断和优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E6%AF%94%E8%BE%83%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="nav-number">7.1.</span> <span class="nav-text">运行和比较基准测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">7.2.</span> <span class="nav-text">比较基准测试的变化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Profiling-and-Tracing"><span class="nav-number">8.</span> <span class="nav-text">Profiling and Tracing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E6%AF%94%E8%BE%83%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95-1"><span class="nav-number">8.1.</span> <span class="nav-text">运行和比较基准测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tracing-%E7%94%9F%E6%88%90"><span class="nav-number">8.2.</span> <span class="nav-text">Tracing 生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%9E%E6%80%81%E6%9D%A1%E4%BB%B6%E6%A3%80%E6%9F%A5"><span class="nav-number">8.3.</span> <span class="nav-text">竞态条件检查</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%EF%BC%88Module%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">依赖管理（Module）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E6%9B%B4%E6%96%B0"><span class="nav-number">9.1.</span> <span class="nav-text">项目依赖更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%8D%87%E7%BA%A7%E6%88%96%E9%99%8D%E7%BA%A7"><span class="nav-number">9.2.</span> <span class="nav-text">依赖升级或降级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%89%80%E6%9C%89%E5%8C%85%E7%9A%84%E5%85%A8%E9%83%A8%E6%B5%8B%E8%AF%95%E6%A3%80%E9%AA%8C%E4%B8%8D%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">9.3.</span> <span class="nav-text">运行所有包的全部测试检验不兼容性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%9D%E8%B5%96%E7%9A%84%E6%9C%AC%E5%9C%B0%E7%89%88%E6%9C%AC"><span class="nav-number">9.4.</span> <span class="nav-text">使用依赖的本地版本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">10.</span> <span class="nav-text">其他工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7%E4%BB%A3%E7%A0%81%E5%88%B0-Go-%E6%96%B0%E7%89%88%E6%9C%AC"><span class="nav-number">10.1.</span> <span class="nav-text">升级代码到 Go 新版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E5%91%8A-Bug"><span class="nav-number">10.2.</span> <span class="nav-text">报告 Bug</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yu</p>
+  <div class="site-description" itemprop="description">世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuako.github.com/posts/582908711/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yu">
+      <meta itemprop="description" content="世上并不存在奇迹，存在的只是必然和偶然，以及自己的所作所为！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大岭">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go常用命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h3><h4 id="最简单的方式"><a href="#最简单的方式" class="headerlink" title="最简单的方式"></a>最简单的方式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get -u golang.org/x/tool/...</span><br></pre></td></tr></table></figure>
+
+<h4 id="替代方式"><a href="#替代方式" class="headerlink" title="替代方式"></a>替代方式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ GO111MODULE=on go get golang.org/x/tool/cmd/stress</span><br></pre></td></tr></table></figure>
+
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ go env</span><br><span class="line">$ go env GOPATH GOO GOARCH</span><br><span class="line">$ go env -w GOPROXY=https://goproxy.cn,direct</span><br><span class="line">$ go <span class="built_in">help</span> environment</span><br></pre></td></tr></table></figure>
+
+<h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><h4 id="运行代码"><a href="#运行代码" class="headerlink" title="运行代码"></a>运行代码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ go run .                      <span class="comment"># 运行当前目录的包 </span></span><br><span class="line">$ go run ./cmd/foo              <span class="comment"># 运行 ./cmd/foo 目录下的包 获取依赖 </span></span><br><span class="line">$ go get github.com/foo/bar@v1.2.3 </span><br><span class="line">$ go get github.com/foo/bar@8e1b8d3 </span><br><span class="line">$ go list -m all                <span class="comment"># 显示所有依赖 </span></span><br><span class="line">$ go mod why -m golang.org/x/y  <span class="comment"># 为什依赖它？ </span></span><br><span class="line">$ go clean -modcache            <span class="comment"># 清除模块缓存 格式化代码 </span></span><br><span class="line">$ gofmt -d -w -r <span class="string">&#x27;foo -&gt; Foo&#x27;</span> . <span class="comment"># 替换 foo 为 Foo </span></span><br><span class="line">$ gofmt -d -w -r <span class="string">&#x27;strings.Replace(a, b, -1) -&gt; strings.ReplaceAll(a, b)&#x27;</span> . </span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-Go-文档"><a href="#查看-Go-文档" class="headerlink" title="查看 Go 文档"></a>查看 Go 文档</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ go doc strings                <span class="comment"># 查看 strings 包的简化版文档 </span></span><br><span class="line">$ go doc -all strings           <span class="comment"># 查看 strings 包的全部文档 </span></span><br><span class="line">$ go doc strings.Replace        <span class="comment"># 查看 strings.Replace 函数的文档 </span></span><br><span class="line">$ go doc sql.DB                 <span class="comment"># 查看 database/sql.DB 类型的文档 </span></span><br><span class="line">$ go doc sql.DB.Query           <span class="comment"># 查看 database/sql.DB.Query 方法的文档 </span></span><br><span class="line">$ go doc -src strings.Replace   <span class="comment"># 查看 strings.Replace 函数的源码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><h4 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> .                      <span class="comment"># 运行当前目录的所有测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> ./...                  <span class="comment"># 运行当前目录及其子目录的所有测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> ./foo/bar              <span class="comment"># 运行 ./foo/bar 目录的所有测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -race ./...            <span class="comment"># 启用 race 检测的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -count=1 ./...         <span class="comment"># 运行测试时绕过测试缓存 </span></span><br><span class="line">$ go clean -testcache            <span class="comment"># 删除所有缓存的测试结果 </span></span><br><span class="line">$ go <span class="built_in">test</span> -v -run=^TestFooBar$ . <span class="comment"># 运行名称为 TestFooBar 的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -v -run=^TestFoo .     <span class="comment"># 运行名称以 TestFoo 开头的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -v -run=^TestFooBar$/^Baz$ . <span class="comment"># 仅运行 FooBar 测试下的 Baz 子测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -short ./...           <span class="comment"># 跳过长时间运行的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -failfast ./...        <span class="comment"># 失败后请勿再进行进一步的测试</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Profiling-Test-Coverage"><a href="#Profiling-Test-Coverage" class="headerlink" title="Profiling Test Coverage"></a>Profiling Test Coverage</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -cover ./... </span><br><span class="line">$ go <span class="built_in">test</span> -coverprofile=/tmp/profile.out ./...                  <span class="comment"># coverage profile for browser </span></span><br><span class="line">$ go tool cover -html=/tmp/profile.out </span><br><span class="line">$ go <span class="built_in">test</span> -covermode=count -coverprofile=/tmp/profile.out ./... <span class="comment"># coverage with frequency shown </span></span><br><span class="line">$ go tool cover -html=/tmp/profile.out </span><br><span class="line">$ go <span class="built_in">test</span> -coverprofile=/tmp/profile.out ./...                  <span class="comment"># coverage in CLI without any browser </span></span><br><span class="line">$ go tool cover -func=/tmp/profile.out</span><br></pre></td></tr></table></figure>
+
+<h3 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -run=^TestFooBar$ -count=500 . </span><br><span class="line">$ go <span class="built_in">test</span> -c -o=/tmp/foo.test . <span class="comment"># 使用压力工具 golang.org/x/tools/cmd/stress </span></span><br><span class="line">$ stress -p=4 /tmp/foo.test -test.run=^TestFooBar$</span><br></pre></td></tr></table></figure>
+
+<h4 id="Testing-all-dependencies"><a href="#Testing-all-dependencies" class="headerlink" title="Testing all dependencies"></a>Testing all dependencies</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> all</span><br></pre></td></tr></table></figure>
+
+<h3 id="提交前检查"><a href="#提交前检查" class="headerlink" title="提交前检查"></a>提交前检查</h3><h4 id="格式化代码"><a href="#格式化代码" class="headerlink" title="格式化代码"></a>格式化代码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ gofmt -w -s -d foo.go   <span class="comment"># 格式化 foo.go 文件 </span></span><br><span class="line">$ gofmt -w -s -d .        <span class="comment"># 递归格式化当前目录和子目录所有文件 </span></span><br><span class="line">$ go fmt ./...            <span class="comment"># 另外一种格式化工具，等价 gofmt -l -w ./...</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="通过-vet-进行静态分析"><a href="#通过-vet-进行静态分析" class="headerlink" title="通过 vet 进行静态分析"></a>通过 vet 进行静态分析</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ go vet foo.go           <span class="comment"># 检查 foo.go 文件 </span></span><br><span class="line">$ go vet .                <span class="comment"># 检查当前目录下所有文件 </span></span><br><span class="line">$ go vet ./...            <span class="comment"># 检查当前目录及子目录下所有文件 </span></span><br><span class="line">$ go vet ./foo/bar        <span class="comment"># 检查 ./foo/bar 目录下所有文件 </span></span><br><span class="line">$ go vet -composites=<span class="literal">false</span> ./... <span class="comment"># 禁用一些分析器</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="实验性的分析器"><a href="#实验性的分析器" class="headerlink" title="实验性的分析器"></a>实验性的分析器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /tmp </span><br><span class="line">$ GO111MODULE=on go get golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness </span><br><span class="line">$ GO111MODULE=on go get golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow </span><br><span class="line">$ go vet -vettool=$(<span class="built_in">which</span> nilness) ./...</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试时禁用-vet-工具"><a href="#测试时禁用-vet-工具" class="headerlink" title="测试时禁用 vet 工具"></a>测试时禁用 vet 工具</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -vet=off ./...</span><br></pre></td></tr></table></figure>
+
+<h4 id="整理代码（LintingCode）"><a href="#整理代码（LintingCode）" class="headerlink" title="整理代码（LintingCode）"></a>整理代码（LintingCode）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /tmp          <span class="comment"># 安装 linter </span></span><br><span class="line">$ GO111MODULE=on go get golang.org/x/lint/golint </span><br><span class="line">$ golint foo.go    <span class="comment"># Lint the foo.go file </span></span><br><span class="line">$ golint .         <span class="comment"># Lint all files in the current directory </span></span><br><span class="line">$ golint ./...     <span class="comment"># Lint all files in the current directory and sub-directories </span></span><br><span class="line">$ golint ./foo/bar <span class="comment"># Lint all files in the ./foo/bar directory</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="整理和验证依赖"><a href="#整理和验证依赖" class="headerlink" title="整理和验证依赖"></a>整理和验证依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go mod tidy      <span class="comment"># 移除所有未使用过的依赖 </span></span><br><span class="line">$ go mod verify    <span class="comment"># 检查依赖的 hash</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编译和部署"><a href="#编译和部署" class="headerlink" title="编译和部署"></a>编译和部署</h3><h4 id="编译可执行文件"><a href="#编译可执行文件" class="headerlink" title="编译可执行文件"></a>编译可执行文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go build -o=/tmp/foo .         <span class="comment"># 编译当前目录的包 </span></span><br><span class="line">$ go build -o=/tmp/foo ./cmd/foo <span class="comment"># 编译 ./cmd/foo 目录的包 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="编译缓存"><a href="#编译缓存" class="headerlink" title="编译缓存"></a>编译缓存</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go env GOCACHE                 <span class="comment"># 检查你的编译缓存存放目录 </span></span><br><span class="line">$ go build -a -o=/tmp/foo .      <span class="comment"># 强制重编译所有包 </span></span><br><span class="line">$ go clean -cache                <span class="comment"># 清除缓存 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go list -deps . | sort -u      <span class="comment"># 列出用于编译可执行文件的所有包 </span></span><br><span class="line">$ go build -a -x -o=/tmp/foo .   <span class="comment"># 重建所有内容并显示运行的命令 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ GOOS=linux GOARCH=amd64 go build -o=/tmp/linux_amd64/foo . </span><br><span class="line">$ GOOS=windows GOARCH=amd64 go build -o=/tmp/windows_amd64/foo.exe . </span><br><span class="line">$ go tool dist list              <span class="comment"># 列出所有支持的操作系统和CPU架构</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用编译器和链接器-flags"><a href="#使用编译器和链接器-flags" class="headerlink" title="使用编译器和链接器 flags"></a>使用编译器和链接器 flags</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ go tool compile -<span class="built_in">help</span>                       <span class="comment"># 查看编译器可用的 flag </span></span><br><span class="line">$ go build -gcflags=<span class="string">&quot;-m -m&quot;</span> -o=/tmp/foo .     <span class="comment"># 打印有关优化决策的信息 </span></span><br><span class="line">$ go build -gcflags=<span class="string">&quot;all=-m&quot;</span> -o=/tmp/foo .    <span class="comment"># 打印包括依赖的优化决策信息 </span></span><br><span class="line">$ go build -gcflags=<span class="string">&quot;all=-N -l&quot;</span> -o=/tmp/foo . <span class="comment"># 禁用优化和内联 </span></span><br><span class="line">$ go tool link -<span class="built_in">help</span>                          <span class="comment"># 查看链接器可用的 flag </span></span><br><span class="line">$ go build -ldflags=<span class="string">&quot;-X main.version=1.2.3&quot;</span> -o=/tmp/foo . <span class="comment"># 增加版本信息 </span></span><br><span class="line">$ go build -ldflags=<span class="string">&quot;-s -w&quot;</span> -o=/tmp/foo .                 <span class="comment"># 从二进制文件中删除调试信息 </span></span><br><span class="line">$ CGO_ENABLE=0 GOOS=linux go build -a -ldflags <span class="string">&#x27;-extldflags &quot;-static&quot;&#x27;</span> . <span class="comment"># 使二进制文件尽可能静态</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="问题诊断和优化"><a href="#问题诊断和优化" class="headerlink" title="问题诊断和优化"></a>问题诊断和优化</h3><h4 id="运行和比较基准测试"><a href="#运行和比较基准测试" class="headerlink" title="运行和比较基准测试"></a>运行和比较基准测试</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -bench=. ./...                                  <span class="comment"># 运行所有测试和基准测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=. ./...                          <span class="comment"># 只运行所有的基准测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ ./...             <span class="comment"># 只运行 BenchmarkFoo 基准测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -benchmem ./...                        <span class="comment"># 强制将内存分配统计信息包含在输出中 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -benchtime=5s ./...                    <span class="comment"># 运行每个基准测试至少5秒钟 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -benchtime=500x ./...                  <span class="comment"># 保证每个基准测试精确进行500次迭代 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -count=3 ./...                         <span class="comment"># 重复每个基准测试3次 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -cpu=1,4,8 ./....                      <span class="comment"># 将GOMAXPROCS设置为1、4和8运行基准测试 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="比较基准测试的变化"><a href="#比较基准测试的变化" class="headerlink" title="比较基准测试的变化"></a>比较基准测试的变化</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /tmp                                                 <span class="comment"># 安装 benchcmp 工具 </span></span><br><span class="line">$ GO111MODULE=on go get golang.org/x/tools/cmd/benchcmp </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=. -benchmem ./... &gt; /tmp/old.txt <span class="comment"># 进行一些修改、优化 </span></span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=. -benchmem ./... &gt; /tmp/new.txt </span><br><span class="line">$ benchcmp /tmp/old.txt /tmp/new.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="Profiling-and-Tracing"><a href="#Profiling-and-Tracing" class="headerlink" title="Profiling and Tracing"></a>Profiling and Tracing</h3><h4 id="运行和比较基准测试-1"><a href="#运行和比较基准测试-1" class="headerlink" title="运行和比较基准测试"></a>运行和比较基准测试</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -cpuprofile=/tmp/cpuprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -memprofile=/tmp/memprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -blockprofile=/tmp/blockprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -mutexprofile=/tmp/mutexprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -o=/tmp/foo.test -cpuprofile=/tmp/cpuprofile.out . </span><br><span class="line">$ go tool pprof -http=:5000 /tmp/cpuprofile.out                    <span class="comment"># 在浏览器中审查 </span></span><br><span class="line">$ go tool pprof --nodefraction=0.1 -http=:5000 /tmp/cpuprofile.out <span class="comment"># 忽略小于 10% 的节点</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Tracing-生成"><a href="#Tracing-生成" class="headerlink" title="Tracing 生成"></a>Tracing 生成</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -trace=/tmp/trace.out . </span><br><span class="line">$ go tool trace /tmp/trace.out <span class="comment"># 目前只在 Chrome/Chromium 可用</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="竞态条件检查"><a href="#竞态条件检查" class="headerlink" title="竞态条件检查"></a>竞态条件检查</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go build -race -o=/tmp/foo .         <span class="comment"># 别用于生产环境 </span></span><br><span class="line">$ GORACE=<span class="string">&quot;log_path=/tmp/race&quot;</span> /tmp/foo <span class="comment"># 输出到文件而不是标准错误</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="依赖管理（Module）"><a href="#依赖管理（Module）" class="headerlink" title="依赖管理（Module）"></a>依赖管理（Module）</h3><h4 id="项目依赖更新"><a href="#项目依赖更新" class="headerlink" title="项目依赖更新"></a>项目依赖更新</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go list -m -u github.com/alecthomas/chroma  <span class="comment"># 检查该库是否有新版本 </span></span><br><span class="line">$ go list -m -u all                           <span class="comment"># 更新项目所有依赖 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="依赖升级或降级"><a href="#依赖升级或降级" class="headerlink" title="依赖升级或降级"></a>依赖升级或降级</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com/foo/bar@latest            <span class="comment"># 最新版本 </span></span><br><span class="line">$ go get github.com/foo/bar@v1.2.3            <span class="comment"># 特定版本 v1.2.3 </span></span><br><span class="line">$ go get github.com/foo/bar@7e0369f           <span class="comment"># 到特定提交 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="运行所有包的全部测试检验不兼容性"><a href="#运行所有包的全部测试检验不兼容性" class="headerlink" title="运行所有包的全部测试检验不兼容性"></a>运行所有包的全部测试检验不兼容性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go mod tidy $ go <span class="built_in">test</span> all</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用依赖的本地版本"><a href="#使用依赖的本地版本" class="headerlink" title="使用依赖的本地版本"></a>使用依赖的本地版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go mod edit -replace=github.com/alexedwards/argon2id=/home/alex/code/argon2id <span class="comment"># 创建 replace 规则 </span></span><br><span class="line">$ go mod edit -dropreplace=github.com/alexedwards/argon2id                      <span class="comment"># 删除 replace 规则</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h3><h4 id="升级代码到-Go-新版本"><a href="#升级代码到-Go-新版本" class="headerlink" title="升级代码到 Go 新版本"></a>升级代码到 Go 新版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go fix ./... </span><br></pre></td></tr></table></figure>
+
+<h4 id="报告-Bug"><a href="#报告-Bug" class="headerlink" title="报告 Bug"></a>报告 Bug</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go bug <span class="comment"># 会打开浏览器，定位 Go 代码仓库的 issue 页面</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/586654492/" rel="prev" title="es查询某个字段空或非空">
+                  <i class="fa fa-chevron-left"></i> es查询某个字段空或非空
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/1311315085/" rel="next" title="Go上下文">
+                  Go上下文 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

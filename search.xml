@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>导航</title>
+    <url>/posts/808455002/</url>
+    <content><![CDATA[<h4 id="devops"><a href="#devops" class="headerlink" title="devops"></a>devops</h4>]]></content>
+  </entry>
+  <entry>
+    <title>Docker设置日志大小的方法</title>
+    <url>/posts/522605894/</url>
+    <content><![CDATA[<h2 id="一、设置单个容器的日志大小"><a href="#一、设置单个容器的日志大小" class="headerlink" title="一、设置单个容器的日志大小"></a>一、设置单个容器的日志大小</h2><h3 id="1、通过运行时参数配置日志大小"><a href="#1、通过运行时参数配置日志大小" class="headerlink" title="1、通过运行时参数配置日志大小"></a>1、通过运行时参数配置日志大小</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d --log-driver json-file --log-opt max-size=1g nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、通过docker-compose配置文件限制"><a href="#2、通过docker-compose配置文件限制" class="headerlink" title="2、通过docker-compose配置文件限制"></a>2、通过docker-compose配置文件限制</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nginx:</span> </span><br><span class="line">  <span class="attr">image:</span> <span class="string">nginx:latest</span> </span><br><span class="line">  <span class="attr">restart:</span> <span class="string">always</span> </span><br><span class="line">  <span class="attr">logging:</span> </span><br><span class="line">    <span class="attr">driver:</span> <span class="string">&quot;json-file&quot;</span></span><br><span class="line">    <span class="attr">options:</span> </span><br><span class="line">      <span class="attr">max-size:</span> <span class="string">&quot;1g&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、全局设置所有容器的日志大小"><a href="#二、全局设置所有容器的日志大小" class="headerlink" title="二、全局设置所有容器的日志大小"></a>二、全局设置所有容器的日志大小</h2><p>修改docker默认配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
+
+<p>将配置文件内容改成如下，增加log-driver和log-opts配置项</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">		<span class="string">&quot;https://registry.docker-cn.com&quot;</span></span><br><span class="line">	],</span><br><span class="line">	<span class="attr">&quot;log-driver&quot;</span>: <span class="string">&quot;json-file&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;log-opts&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;max-size&quot;</span>: <span class="string">&quot;500m&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;max-file&quot;</span>: <span class="string">&quot;3&quot;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新加载配置和重启docker</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、开启远程访问（非安全方式）"><a href="#三、开启远程访问（非安全方式）" class="headerlink" title="三、开启远程访问（非安全方式）"></a>三、开启远程访问（非安全方式）</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /usr/lib/systemd/system/docker.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主要增加-H参数</span></span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock -H tcp://0.0.0.0:2375</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、开启远程访问（安全方式）"><a href="#四、开启远程访问（安全方式）" class="headerlink" title="四、开启远程访问（安全方式）"></a>四、开启远程访问（安全方式）</h2><p><a href="https://docs.docker.com/engine/security/protect-access/#create-a-ca-server-and-client-keys-with-openss">https://docs.docker.com/engine/security/protect-access/#create-a-ca-server-and-client-keys-with-openss</a></p>
+]]></content>
+      <tags>
+        <tag>devops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>logrotate分割tomcat日志</title>
+    <url>/posts/3321052262/</url>
+    <content><![CDATA[<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>新建tomcat配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/logrotate.d/tomcat</span><br></pre></td></tr></table></figure>
+
+<p>配置文件内容如下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/tomcat/logs/catalina.out &#123;</span><br><span class="line">  daily</span><br><span class="line">  rotate 5</span><br><span class="line">  missingok</span><br><span class="line">  dateext</span><br><span class="line">  compress</span><br><span class="line">  notifempty</span><br><span class="line">  copytruncate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数详解："><a href="#参数详解：" class="headerlink" title="参数详解："></a>参数详解：</h3><ul>
+<li>daily 指定转储周期为每天</li>
+<li>rotate 5 指定日志文件删除之前转储的次数，0指没有备份，5指保留5个备份</li>
+<li>missingok 如果日志不存在则忽略该警告信息</li>
+<li>dateext 文件后缀是日期格式,也就是切割后文件是:xxx.log-20150828.gz</li>
+<li>compress 通过gzip压缩转储以后的日志（gzip -d xxx.gz解压）</li>
+<li>notifempty 如果是空文件的话，不转储</li>
+<li>copytruncate 用于还在打开中的日志文件，把当前日志备份并截断</li>
+</ul>
+<h3 id="立即截断日志"><a href="#立即截断日志" class="headerlink" title="立即截断日志"></a>立即截断日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">logrotate --force /etc/logrotate.d/tomcat</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>devops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jenkins-okd-issue.md</title>
+    <url>/posts/3152459842/</url>
+    <content><![CDATA[<h4 id="一、Docker"><a href="#一、Docker" class="headerlink" title="一、Docker"></a>一、Docker</h4><p>需要安装Docker plugin、Docker pipeline plugin<br>1、系统管理-&gt;全局工具配置-&gt;Docker，安装对应的docker版本<br>2、系统管理-&gt;节点管理-&gt;配置集群<br>3、需要挂载&#x2F;.docker文件夹到Jenkins服务上，默认没有root权限生成不到文件</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">stage(<span class="string">&#x27;镜像打包&#x27;</span>) &#123;</span><br><span class="line">  steps &#123;</span><br><span class="line">    script &#123;</span><br><span class="line">      sh <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">      # 这里可以切换到指定目录执行</span></span><br><span class="line"><span class="string">      cd $&#123;WORKSPACE&#125;/dist</span></span><br><span class="line"><span class="string">      &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">      docker.withServer(<span class="string">&#x27;tcp://&lt;IP&gt;:&lt;PORT&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">def</span> customImage = docker.build(<span class="string">&quot;&lt;JOBNAME&gt;:$&#123;env.BUILD_ID&#125;&quot;</span>)</span><br><span class="line">        docker.withRegistry(<span class="string">&#x27;http://&lt;IP&gt;:&lt;PORT&gt;/&lt;PROJECT&gt;/&#x27;</span>, <span class="string">&#x27;harbor&#x27;</span>) &#123;</span><br><span class="line">          customImage.push()</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>devops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>es查询某个字段空或非空</title>
+    <url>/posts/586654492/</url>
+    <content><![CDATA[<h3 id="查询出没有该字段的文档"><a href="#查询出没有该字段的文档" class="headerlink" title="查询出没有该字段的文档"></a>查询出没有该字段的文档</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;exists&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;字段名称&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询字段值为空字符串"><a href="#查询字段值为空字符串" class="headerlink" title="查询字段值为空字符串"></a>查询字段值为空字符串</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;字段名称&quot;</span>: &#123;</span><br><span class="line">              <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询字段值不为空字符串的文档"><a href="#查询字段值不为空字符串的文档" class="headerlink" title="查询字段值不为空字符串的文档"></a>查询字段值不为空字符串的文档</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET &#123;index&#125;/_count</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;字段名称&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>elasticsearch</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>openfire重置admin密码</title>
+    <url>/posts/1261768158/</url>
+    <content><![CDATA[<p>刪除admin賬號，並插入默認的admin</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">delete from ofUser where username=&#x27;admin&#x27;;</span><br><span class="line">INSERT INTO ofUser (username, plainPassword, name, email, creationDate, modificationDate) VALUES (&#x27;admin&#x27;, &#x27;admin&#x27;, &#x27;Administrator&#x27;, &#x27;admin@example.com&#x27;, &#x27;0&#x27;, &#x27;0&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>修改openfire配置文件，重新配置openfire<br>vi &#x2F;opt&#x2F;openfire&#x2F;conf&#x2F;openfire.xml<br>setup-&gt;false</p>
+<p>重啟openfire服務<br>systemctl restart openfire</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>ansible安装和常用命令</title>
+    <url>/posts/3318512289/</url>
+    <content><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><h3 id="brew安装"><a href="#brew安装" class="headerlink" title="brew安装"></a>brew安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">brew install ansible</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立默认hosts文件</span></span><br><span class="line">sudo mkdir /etc/ansible &amp;&amp; sudo touch /etc/ansible/hosts</span><br></pre></td></tr></table></figure>
+
+<h3 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加EPEL源</span></span><br><span class="line">yum -y install epel-release</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">yum install ansible -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/ansible/ansible.cfg</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">host_key_checking=False</span><br><span class="line">log_path=/var/log/ansible.log</span><br><span class="line">module_name=command</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置的主机需要配置免密登录</span></span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub root@&#123;ip&#125;</span><br><span class="line"></span><br><span class="line">vi /etc/ansible/hosts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 单个主机</span><br><span class="line">192.168.5.10</span><br><span class="line"></span><br><span class="line"># 主机组</span><br><span class="line">[openshift]</span><br><span class="line">192.168.5.11</span><br><span class="line">192.168.5.12</span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible命令"><a href="#ansible命令" class="headerlink" title="ansible命令"></a>ansible命令</h2><blockquote>
+<p>ansible命令又被称为ad-hoc命令，他主要是用来快速在多个远程机器Hosts上执行单个任务（task）</p>
+</blockquote>
+<h3 id="列出所有主机"><a href="#列出所有主机" class="headerlink" title="列出所有主机"></a>列出所有主机</h3><p><code>ansible all --list-hosts</code></p>
+<h5 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h5><p>默认用户是当前机器的用户<br><code>ansible all -m ping</code></p>
+<p>指定用户<br><code>ansible all -m ping -u root</code></p>
+<h3 id="执行shell指令"><a href="#执行shell指令" class="headerlink" title="执行shell指令"></a>执行shell指令</h3><blockquote>
+<p>下面是执行了ls命令</p>
+</blockquote>
+<p><code>ansible all -m shell -a ls</code></p>
+<h3 id="复制文件到主机"><a href="#复制文件到主机" class="headerlink" title="复制文件到主机"></a>复制文件到主机</h3><p><code>ansible -i /etc/ansible/hosts test -m copy -a &quot;src=/tmp/ansible.tar.gz dest=/home/root/ owner=root group=root mode=0777&quot;</code></p>
+<h3 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h3><p><code>ansible -i test -m unarchive -a &#39;src=/etc/bin/ansible.tar.gz dest=/usr/local copy=no mode=0755&#39;</code></p>
+<p><code>ansible -i /etc/ansible/hosts test -m shell &quot;tar -zxvf /etc/bin/ansible.tar.gz -C /usr/local&quot;</code></p>
+<h3 id="批量杀掉进程"><a href="#批量杀掉进程" class="headerlink" title="批量杀掉进程"></a>批量杀掉进程</h3><p><code>ansible test -m shell -a &quot;ps -ef | grep zabbix |grep -v grep |awk &#39;&#123;print \$2&#125;&#39; | xargs kill -9&quot;</code></p>
+<h3 id="设置cron"><a href="#设置cron" class="headerlink" title="设置cron"></a>设置cron</h3><p><code>ansible all -m cron -a &#39;name=&quot;custom job&quot; minute=*/3 hour=* day=* month=* weekday=* job=&quot;/usr/sbin/ntpdate 172.16.254.139&quot;&#39;</code></p>
+<h3 id="建立组"><a href="#建立组" class="headerlink" title="建立组"></a>建立组</h3><p><code>ansible all -m group -a &#39;gid=2017 name=a&#39;</code></p>
+<h3 id="建立用户"><a href="#建立用户" class="headerlink" title="建立用户"></a>建立用户</h3><p><code>ansible all -m user -a &#39;name=aaa groups=aaa state=present&#39;</code></p>
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><p><code>ansible all -m user -a &#39;name=aaa groups=aaa remove=yes&#39;</code></p>
+<h3 id="在节点上安装httpd"><a href="#在节点上安装httpd" class="headerlink" title="在节点上安装httpd"></a>在节点上安装httpd</h3><p><code>ansible all -m yum -a &quot;state=present name=httpd&quot;</code></p>
+<h3 id="在节点上启动服务，并开机自启动"><a href="#在节点上启动服务，并开机自启动" class="headerlink" title="在节点上启动服务，并开机自启动"></a>在节点上启动服务，并开机自启动</h3><p><code>ansible all -m service -a &#39;name=httpd state=started enabled=yes&#39;</code></p>
+<h3 id="执行远程命令"><a href="#执行远程命令" class="headerlink" title="执行远程命令"></a>执行远程命令</h3><p><code>ansible all -m command -a &#39;uptime&#39;</code></p>
+<h3 id="执行主控端脚本"><a href="#执行主控端脚本" class="headerlink" title="执行主控端脚本"></a>执行主控端脚本</h3><p><code>ansible all -m script -a &#39;/root/test.sh&#39;</code></p>
+<h3 id="执行远程主机的脚本"><a href="#执行远程主机的脚本" class="headerlink" title="执行远程主机的脚本"></a>执行远程主机的脚本</h3><p><code>ansible all -m shell -a &#39;ps aux|grep zabbix&#39;</code></p>
+<h3 id="类似shell"><a href="#类似shell" class="headerlink" title="类似shell"></a>类似shell</h3><p><code>ansible all -m raw -a &quot;ps aux|grep zabbix|awk &#39;&#123;print $2&#125;&#39;&quot;</code></p>
+<h3 id="创建软链接"><a href="#创建软链接" class="headerlink" title="创建软链接"></a>创建软链接</h3><p><code>ansible all -m file -a &quot;src=/etc/resolv.conf dest=/tmp/resolv.conf state=link&quot;</code></p>
+<h3 id="删除软链接"><a href="#删除软链接" class="headerlink" title="删除软链接"></a>删除软链接</h3><p><code>ansible all -m file -a &quot;path=/tmp/resolv.conf state=absent&quot;</code></p>
+<h3 id="复制文件到远程服务器"><a href="#复制文件到远程服务器" class="headerlink" title="复制文件到远程服务器"></a>复制文件到远程服务器</h3><p><code>ansible all -m copy -a &quot;src=/etc/ansible/ansible.cfg dest=/tmp/ansible.cfg owner=root group=root mode=0644&quot;</code></p>
+<h3 id="在节点上运行hostname"><a href="#在节点上运行hostname" class="headerlink" title="在节点上运行hostname"></a>在节点上运行hostname</h3><p><code>ansible all -m raw -a &#39;hostname|tee&#39;</code></p>
+<h3 id="将指定url上的文件下载到-x2F-tmp下"><a href="#将指定url上的文件下载到-x2F-tmp下" class="headerlink" title="将指定url上的文件下载到&#x2F;tmp下"></a>将指定url上的文件下载到&#x2F;tmp下</h3><p><code>ansible all -m get_url -a &#39;url=http://10.1.1.116/favicon.ico dest=/tmp&#39;</code></p>
+<h3 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h3><p><code>ansible --help</code></p>
+<h2 id="ansible-playbook命令"><a href="#ansible-playbook命令" class="headerlink" title="ansible-playbook命令"></a>ansible-playbook命令</h2><blockquote>
+<p>ansible-playbook主要用来执行ansible的playbook。他可以用来在多个远程机器Hosts上执行一个或多个任务（task），这个命令执行时可以指定一个或多个playbook的名字。</p>
+</blockquote>
+<p><code>ansible-playbook playbook.yml [options]</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-u REMOTE_USER, --user=REMOTE_USER ＃ ssh 连接的用户名 </span><br><span class="line">-k, --ask-pass ＃ssh登录认证密码 </span><br><span class="line">-s, --sudo ＃sudo 到root用户，相当于Linux系统下的sudo命令 </span><br><span class="line">-U SUDO_USER, --sudo-user=SUDO_USER ＃sudo 到对应的用户 </span><br><span class="line">-K, --ask-sudo-pass ＃用户的密码（—sudo时使用） </span><br><span class="line">-T TIMEOUT, --timeout=TIMEOUT ＃ ssh 连接超时，默认 10 秒 </span><br><span class="line">-C, --check ＃ 指定该参数后，执行 playbook 文件不会真正去执行，而是模拟执行一遍，然后输出本次执行会对远程主机造成的修改 </span><br><span class="line">-e EXTRA_VARS, --extra-vars=EXTRA_VARS ＃ 设置额外的变量如：key=value 形式 或者 YAML or JSON，以空格分隔变量，或用多个-e </span><br><span class="line">-f FORKS, --forks=FORKS ＃ 进程并发处理，默认 5 </span><br><span class="line">-i INVENTORY, --inventory-file=INVENTORY ＃ 指定 hosts 文件路径，默认 default=/etc/ansible/hosts </span><br><span class="line">-l SUBSET, --limit=SUBSET ＃ 指定一个 pattern，对- hosts:匹配到的主机再过滤一次 </span><br><span class="line">--list-hosts ＃ 只打印有哪些主机会执行这个 playbook 文件，不是实际执行该 playbook </span><br><span class="line">--list-tasks ＃ 列出该 playbook 中会被执行的 task </span><br><span class="line">--private-key=PRIVATE_KEY_FILE ＃ 私钥路径 </span><br><span class="line">--step ＃ 同一时间只执行一个 task，每个 task 执行前都会提示确认一遍 </span><br><span class="line">--syntax-check ＃ 只检测 playbook 文件语法是否有问题，不会执行该 playbook</span><br><span class="line">-t TAGS, --tags=TAGS ＃当 play 和 task 的 tag 为该参数指定的值时才执行，多个 tag 以逗号分隔 </span><br><span class="line">--skip-tags=SKIP_TAGS ＃ 当 play 和 task 的 tag 不匹配该参数指定的值时，才执行 </span><br><span class="line">-v, --verbose ＃输出更详细的执行过程信息，-vvv可得到所有执行过程信息。</span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible-config"><a href="#ansible-config" class="headerlink" title="ansible-config"></a>ansible-config</h2><blockquote>
+<p>这个命令主要用来初始化或者查看当前机器ansible的配置信息</p>
+</blockquote>
+<p><code>ansible-config [-h] [-version] [-v] &#123;list,dump,view,init&#125;</code></p>
+<h2 id="ansible-inventory"><a href="#ansible-inventory" class="headerlink" title="ansible-inventory"></a>ansible-inventory</h2><blockquote>
+<p>该命令主要用于显示或者导出ansible配置好的Inventory</p>
+</blockquote>
+<p><code>ansible-inventory &#123;--list/--host/--graph&#125;</code></p>
+<h2 id="ansible-doc"><a href="#ansible-doc" class="headerlink" title="ansible-doc"></a>ansible-doc</h2><blockquote>
+<p>该命令主要用于通过获取当前安装的plugin的一些api</p>
+</blockquote>
+<p><code>ansible-doc [plugin [plugin ...]]</code></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>openshift-3.11</title>
+    <url>/posts/813619357/</url>
+    <content><![CDATA[<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="一、准备机器"><a href="#一、准备机器" class="headerlink" title="一、准备机器"></a>一、准备机器</h3><p>master1<br>router1<br>node1<br>node2<br>master 主要作为控制机器，並不属于openshift，主要用来跑ansible，可以使用上面的任何一台机器替代</p>
+<p>如果本地安装的centos，需要配置网络，网卡名字可能不一样</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑网卡配置文件</span></span><br><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置内容</span></span><br><span class="line">ONBOOT=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line"><span class="comment"># 下面配置根据实际情况配置</span></span><br><span class="line">IPADDR=192.168.242.140</span><br><span class="line">PREFIX=16</span><br><span class="line">GATEWAY=192.168.1.3</span><br><span class="line">DNS1=192.168.1.3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启网卡</span></span><br><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、配置yum"><a href="#二、配置yum" class="headerlink" title="二、配置yum"></a>二、配置yum</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 取消快速查找插件，修改plugins=1为plugins=0</span></span><br><span class="line">vi /etc/yum.conf</span><br><span class="line"></span><br><span class="line">yum update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份所有源</span></span><br><span class="line">cp -rp /etc/yum.repos.d/ /etc/yum.repos.d.bak/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有源</span></span><br><span class="line">rm -rf /etc/yum.repos.d/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增阿里云源，配置文件如下</span></span><br><span class="line">vi all.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新</span></span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+
+<p>all.repo</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base </span><br><span class="line">baseurl=http://mirrors.aliyun.com/centos/$releasever/os/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">[openshift]</span><br><span class="line">name=Openshift</span><br><span class="line">baseurl=http://mirrors.aliyun.com/centos/$releasever/paas/$basearch/openshift-origin311/</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">[epel]</span><br><span class="line">name=Centos EPEL</span><br><span class="line">baseurl=http://mirrors.aliyun.com/epel/7/x86_64/</span><br><span class="line">gpgcheck=0</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、安装ansible"><a href="#三、安装ansible" class="headerlink" title="三、安装ansible"></a>三、安装ansible</h3><p>在master机器上进行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.6.8-1.el7.ans.noarch.rpm -O</span><br><span class="line">yum install ansible-2.6.8-1.el7.ans.noarch.rpm</span><br><span class="line">yum install httpd-tools java-1.8.0-openjdk-headless python-passlib pyOpenSSL</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、配置hosts和免密登录"><a href="#四、配置hosts和免密登录" class="headerlink" title="四、配置hosts和免密登录"></a>四、配置hosts和免密登录</h3><p>在master机器上进行</p>
+<p>1、配置master的hosts文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">192.168.242.140 master</span><br><span class="line">192.168.242.141 master1</span><br><span class="line">192.168.242.142 router1</span><br><span class="line">192.168.242.143 node1</span><br><span class="line">192.168.242.144 node2</span><br></pre></td></tr></table></figure>
+
+<p>2、配置免密登录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub master1</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub router1</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub node1</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub node2</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、准备inventory"><a href="#五、准备inventory" class="headerlink" title="五、准备inventory"></a>五、准备inventory</h3><p>更多详细参数请参考官方文档：<a href="https://access.redhat.com/documentation/zh-cn/openshift_container_platform/3.11/html/installing_clusters/multiple-masters">https://access.redhat.com/documentation/zh-cn/openshift_container_platform/3.11/html/installing_clusters/multiple-masters</a></p>
+<p>vi &#x2F;etc&#x2F;ansible&#x2F;hosts</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[OSEv3:children]</span><br><span class="line">masters</span><br><span class="line">nodes</span><br><span class="line">etcd</span><br><span class="line"></span><br><span class="line">[OSEv3:vars]</span><br><span class="line">ansible_ssh_user=root</span><br><span class="line">openshift_deployment_type=origin</span><br><span class="line">#openshift_release=&quot;3.11&quot;</span><br><span class="line">openshift_master_identity_providers=[&#123;&#x27;name&#x27;: &#x27;htpasswd_auth&#x27;, &#x27;login&#x27;: &#x27;true&#x27;, &#x27;challenge&#x27;: &#x27;true&#x27;, &#x27;kind&#x27;: &#x27;HTPasswdPasswordIdentityProvider&#x27;&#125;]</span><br><span class="line"></span><br><span class="line">openshift_public_hostname=okd.yuako.dev</span><br><span class="line">openshift_master_default_subdomain=yuako.dev</span><br><span class="line">openshift_ca_cert_expire_days=3650</span><br><span class="line">openshift_node_cert_expire_days=3650</span><br><span class="line">openshift_master_cert_expire_days=3650</span><br><span class="line">etcd_ca_default_days=3650</span><br><span class="line"></span><br><span class="line">#openshift_hosted_manage_registry=false</span><br><span class="line">openshift_disable_check=memory_availability,disk_availability,docker_image_availability,docker_storage</span><br><span class="line">#openshift_enable_service_catalog=false</span><br><span class="line">#template_service_broker_install=false</span><br><span class="line">#ansible_service_broker_install=false</span><br><span class="line">#osn_storage_plugin_deps=[]</span><br><span class="line">#openshift_enable_service_catalog=false</span><br><span class="line">#openshift_cluster_monitoring_operator_install=false</span><br><span class="line"></span><br><span class="line">[masters]</span><br><span class="line">master1</span><br><span class="line"></span><br><span class="line">[etcd]</span><br><span class="line">master1</span><br><span class="line"></span><br><span class="line">[nodes]</span><br><span class="line">master1 openshift_node_group_name=&#x27;node-config-master&#x27;</span><br><span class="line">node1 openshift_node_group_name=&#x27;node-config-compute&#x27;</span><br><span class="line">node2 openshift_node_group_name=&#x27;node-config-compute&#x27;</span><br><span class="line">router1 openshift_node_group_name=&#x27;node-config-infra&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="六、安装"><a href="#六、安装" class="headerlink" title="六、安装"></a>六、安装</h3><p>主机名：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ansible all -m shell -a &quot;hostnamectl set-hostname --static &#123;&#123; inventory_hostname &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>YUM:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp /etc/yum.repos.d/all.repo /tmp/</span><br><span class="line">ansible all -m shell -a &quot;rm -rf /etc/yum.repos.d/*&quot;</span><br><span class="line">ansible all -m shell -a &#x27;sed -i &quot;s/plugins=1/plugins=0/g&quot; /etc/yum.conf&#x27;</span><br><span class="line">ansible all -m copy -a &quot;src=/tmp/all.repo dest=/etc/yum.repos.d/all.repo&quot;</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;etc&#x2F;hosts:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ansible all -m copy -a &#x27;src=/etc/hosts dest=/etc/hosts&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>集群节点selinux设置（需要重启生效）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ansible all -m shell -a &#x27;sed -i &quot;s/^SELINUX=disabled/SELINUX=permissive/g&quot; /etc/selinux/config&#x27;</span><br><span class="line">ansible all -m shell -a &#x27;reboot&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>下载安装程序，<a href="https://github.com/openshift/openshift-ansible/tags%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%9A%843.11%E7%89%88%E6%9C%AC%E4%B8%8B%E8%BD%BD%EF%BC%8C%E8%A7%A3%E5%8E%8B%E3%80%82">https://github.com/openshift/openshift-ansible/tags，选择一个最新的3.11版本下载，解压。</a><br>禁用集群安装默认的repos源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd openshift-ansible-release-3.11</span><br><span class="line">sed -i &quot;s/^enabled=1/enabled=0/g&quot; roles/openshift_repos/templates/CentOS-OpenShift-Origin311.repo.j2</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook ~/openshift-ansible/playbooks/prerequisites.yml</span><br><span class="line">ansible-playbook ~/openshift-ansible/playbooks/deploy_cluster.yml</span><br></pre></td></tr></table></figure>
+
+<p>卸载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook ~/openshift-ansible/playbooks/adhoc/uninstall.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="七、创建管理员用户和密码"><a href="#七、创建管理员用户和密码" class="headerlink" title="七、创建管理员用户和密码"></a>七、创建管理员用户和密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible masters -m shell -a &#x27;htpasswd -b /etc/origin/master/htpasswd admin admin&#x27;</span><br><span class="line">ansible masters -m shell -a &#x27;oc adm policy add-cluster-role-to-user cluster-admin admin&#x27;</span><br></pre></td></tr></table></figure>
+<p>即可用admin&#x2F;admin登录</p>
+<h3 id="八、常见问题"><a href="#八、常见问题" class="headerlink" title="八、常见问题"></a>八、常见问题</h3><h4 id="1、Privileged-containers-are-not-allowed-spec-initContainers-1-securityContext-privileged-Invalid-value-true"><a href="#1、Privileged-containers-are-not-allowed-spec-initContainers-1-securityContext-privileged-Invalid-value-true" class="headerlink" title="1、Privileged containers are not allowed spec.initContainers[1].securityContext.privileged: Invalid value: true"></a>1、Privileged containers are not allowed spec.initContainers[1].securityContext.privileged: Invalid value: true</h4><p>权限问题，<code>-n</code>后面是namespace也就是project</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">oc adm policy add-scc-to-user privileged -z default -n efk</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、Error-EACCES-permission-denied-mkdir"><a href="#2、Error-EACCES-permission-denied-mkdir" class="headerlink" title="2、Error: EACCES: permission denied, mkdir"></a>2、Error: EACCES: permission denied, mkdir</h4><p>权限问题，没有写入到指定目录权限</p>
+<ul>
+<li>配置私有存储，指定分配路径</li>
+<li>直接分配权限（生产环境不建议）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">oc adm policy add-scc-to-user anyuid -z default</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>devops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>liquibase基本使用</title>
+    <url>/posts/2869527249/</url>
+    <content><![CDATA[<h3 id="下载和安装"><a href="#下载和安装" class="headerlink" title="下载和安装"></a>下载和安装</h3><p>下载地址：<br><a href="https://download.liquibase.org/">https://download.liquibase.org/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">liquibase --driver=com.mysql.cj.jdbc.Driver --classpath=~/development/lib/mysql-connector-java-8.0.30.jar --changeLogFile=./init-table.xml --url=&quot;jdbc:mysql://localhost:3306/yudb&quot; --username=root generateChangeLog</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>database</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java中Map遍历的四种方法</title>
+    <url>/posts/1314230304/</url>
+    <content><![CDATA[<p>在java中所有的map都实现了Map接口，因此所有的Map（如HashMap, TreeMap, LinkedHashMap, Hashtable等）都可以用以下的方式去遍历。</p>
+<p>方法一：在for循环中使用entries实现Map的遍历：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 最常见也是大多数情况下用的最多的，一般在键值对都需要使用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Map &lt;String,String&gt;map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;熊大&quot;</span>, <span class="string">&quot;棕色&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;熊二&quot;</span>, <span class="string">&quot;黄色&quot;</span>);</span><br><span class="line"><span class="keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;</span><br><span class="line">    String mapKey = entry.getKey();</span><br><span class="line">    String mapValue = entry.getValue();</span><br><span class="line">    System.out.println(mapKey+<span class="string">&quot;:&quot;</span>+mapValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：在for循环中遍历key或者values，一般适用于只需要map中的key或者value时使用，在性能上比使用entrySet较好；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map &lt;String,String&gt;map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;熊大&quot;</span>, <span class="string">&quot;棕色&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;熊二&quot;</span>, <span class="string">&quot;黄色&quot;</span>);</span><br><span class="line"><span class="comment">//key</span></span><br><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    System.out.println(key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//value</span></span><br><span class="line"><span class="keyword">for</span>(String value : map.values())&#123;</span><br><span class="line">    System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：通过Iterator遍历；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Iterator&lt;Entry&lt;String, String&gt;&gt; entries = map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span>(entries.hasNext())&#123;</span><br><span class="line">    Entry&lt;String, String&gt; entry = entries.next();</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    String value = entry.getValue();</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法四：通过键找值遍历，这种方式的效率比较低，因为本身从键取值是耗时的操作；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    String value = map.get(key);</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>map</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go常用命令</title>
+    <url>/posts/582908711/</url>
+    <content><![CDATA[<h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h3><h4 id="最简单的方式"><a href="#最简单的方式" class="headerlink" title="最简单的方式"></a>最简单的方式</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go get -u golang.org/x/tool/...</span><br></pre></td></tr></table></figure>
+
+<h4 id="替代方式"><a href="#替代方式" class="headerlink" title="替代方式"></a>替代方式</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ GO111MODULE=on go get golang.org/x/tool/cmd/stress</span><br></pre></td></tr></table></figure>
+
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go env</span><br><span class="line">$ go env GOPATH GOO GOARCH</span><br><span class="line">$ go env -w GOPROXY=https://goproxy.cn,direct</span><br><span class="line">$ go <span class="built_in">help</span> environment</span><br></pre></td></tr></table></figure>
+
+<h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><h4 id="运行代码"><a href="#运行代码" class="headerlink" title="运行代码"></a>运行代码</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go run .                      <span class="comment"># 运行当前目录的包 </span></span><br><span class="line">$ go run ./cmd/foo              <span class="comment"># 运行 ./cmd/foo 目录下的包 获取依赖 </span></span><br><span class="line">$ go get github.com/foo/bar@v1.2.3 </span><br><span class="line">$ go get github.com/foo/bar@8e1b8d3 </span><br><span class="line">$ go list -m all                <span class="comment"># 显示所有依赖 </span></span><br><span class="line">$ go mod why -m golang.org/x/y  <span class="comment"># 为什依赖它？ </span></span><br><span class="line">$ go clean -modcache            <span class="comment"># 清除模块缓存 格式化代码 </span></span><br><span class="line">$ gofmt -d -w -r <span class="string">&#x27;foo -&gt; Foo&#x27;</span> . <span class="comment"># 替换 foo 为 Foo </span></span><br><span class="line">$ gofmt -d -w -r <span class="string">&#x27;strings.Replace(a, b, -1) -&gt; strings.ReplaceAll(a, b)&#x27;</span> . </span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-Go-文档"><a href="#查看-Go-文档" class="headerlink" title="查看 Go 文档"></a>查看 Go 文档</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go doc strings                <span class="comment"># 查看 strings 包的简化版文档 </span></span><br><span class="line">$ go doc -all strings           <span class="comment"># 查看 strings 包的全部文档 </span></span><br><span class="line">$ go doc strings.Replace        <span class="comment"># 查看 strings.Replace 函数的文档 </span></span><br><span class="line">$ go doc sql.DB                 <span class="comment"># 查看 database/sql.DB 类型的文档 </span></span><br><span class="line">$ go doc sql.DB.Query           <span class="comment"># 查看 database/sql.DB.Query 方法的文档 </span></span><br><span class="line">$ go doc -src strings.Replace   <span class="comment"># 查看 strings.Replace 函数的源码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><h4 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> .                      <span class="comment"># 运行当前目录的所有测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> ./...                  <span class="comment"># 运行当前目录及其子目录的所有测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> ./foo/bar              <span class="comment"># 运行 ./foo/bar 目录的所有测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -race ./...            <span class="comment"># 启用 race 检测的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -count=1 ./...         <span class="comment"># 运行测试时绕过测试缓存 </span></span><br><span class="line">$ go clean -testcache            <span class="comment"># 删除所有缓存的测试结果 </span></span><br><span class="line">$ go <span class="built_in">test</span> -v -run=^TestFooBar$ . <span class="comment"># 运行名称为 TestFooBar 的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -v -run=^TestFoo .     <span class="comment"># 运行名称以 TestFoo 开头的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -v -run=^TestFooBar$/^Baz$ . <span class="comment"># 仅运行 FooBar 测试下的 Baz 子测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -short ./...           <span class="comment"># 跳过长时间运行的测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -failfast ./...        <span class="comment"># 失败后请勿再进行进一步的测试</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Profiling-Test-Coverage"><a href="#Profiling-Test-Coverage" class="headerlink" title="Profiling Test Coverage"></a>Profiling Test Coverage</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -cover ./... </span><br><span class="line">$ go <span class="built_in">test</span> -coverprofile=/tmp/profile.out ./...                  <span class="comment"># coverage profile for browser </span></span><br><span class="line">$ go tool cover -html=/tmp/profile.out </span><br><span class="line">$ go <span class="built_in">test</span> -covermode=count -coverprofile=/tmp/profile.out ./... <span class="comment"># coverage with frequency shown </span></span><br><span class="line">$ go tool cover -html=/tmp/profile.out </span><br><span class="line">$ go <span class="built_in">test</span> -coverprofile=/tmp/profile.out ./...                  <span class="comment"># coverage in CLI without any browser </span></span><br><span class="line">$ go tool cover -func=/tmp/profile.out</span><br></pre></td></tr></table></figure>
+
+<h3 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -run=^TestFooBar$ -count=500 . </span><br><span class="line">$ go <span class="built_in">test</span> -c -o=/tmp/foo.test . <span class="comment"># 使用压力工具 golang.org/x/tools/cmd/stress </span></span><br><span class="line">$ stress -p=4 /tmp/foo.test -test.run=^TestFooBar$</span><br></pre></td></tr></table></figure>
+
+<h4 id="Testing-all-dependencies"><a href="#Testing-all-dependencies" class="headerlink" title="Testing all dependencies"></a>Testing all dependencies</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> all</span><br></pre></td></tr></table></figure>
+
+<h3 id="提交前检查"><a href="#提交前检查" class="headerlink" title="提交前检查"></a>提交前检查</h3><h4 id="格式化代码"><a href="#格式化代码" class="headerlink" title="格式化代码"></a>格式化代码</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gofmt -w -s -d foo.go   <span class="comment"># 格式化 foo.go 文件 </span></span><br><span class="line">$ gofmt -w -s -d .        <span class="comment"># 递归格式化当前目录和子目录所有文件 </span></span><br><span class="line">$ go fmt ./...            <span class="comment"># 另外一种格式化工具，等价 gofmt -l -w ./...</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="通过-vet-进行静态分析"><a href="#通过-vet-进行静态分析" class="headerlink" title="通过 vet 进行静态分析"></a>通过 vet 进行静态分析</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go vet foo.go           <span class="comment"># 检查 foo.go 文件 </span></span><br><span class="line">$ go vet .                <span class="comment"># 检查当前目录下所有文件 </span></span><br><span class="line">$ go vet ./...            <span class="comment"># 检查当前目录及子目录下所有文件 </span></span><br><span class="line">$ go vet ./foo/bar        <span class="comment"># 检查 ./foo/bar 目录下所有文件 </span></span><br><span class="line">$ go vet -composites=<span class="literal">false</span> ./... <span class="comment"># 禁用一些分析器</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="实验性的分析器"><a href="#实验性的分析器" class="headerlink" title="实验性的分析器"></a>实验性的分析器</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /tmp </span><br><span class="line">$ GO111MODULE=on go get golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness </span><br><span class="line">$ GO111MODULE=on go get golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow </span><br><span class="line">$ go vet -vettool=$(<span class="built_in">which</span> nilness) ./...</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试时禁用-vet-工具"><a href="#测试时禁用-vet-工具" class="headerlink" title="测试时禁用 vet 工具"></a>测试时禁用 vet 工具</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -vet=off ./...</span><br></pre></td></tr></table></figure>
+
+<h4 id="整理代码（LintingCode）"><a href="#整理代码（LintingCode）" class="headerlink" title="整理代码（LintingCode）"></a>整理代码（LintingCode）</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /tmp          <span class="comment"># 安装 linter </span></span><br><span class="line">$ GO111MODULE=on go get golang.org/x/lint/golint </span><br><span class="line">$ golint foo.go    <span class="comment"># Lint the foo.go file </span></span><br><span class="line">$ golint .         <span class="comment"># Lint all files in the current directory </span></span><br><span class="line">$ golint ./...     <span class="comment"># Lint all files in the current directory and sub-directories </span></span><br><span class="line">$ golint ./foo/bar <span class="comment"># Lint all files in the ./foo/bar directory</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="整理和验证依赖"><a href="#整理和验证依赖" class="headerlink" title="整理和验证依赖"></a>整理和验证依赖</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go mod tidy      <span class="comment"># 移除所有未使用过的依赖 </span></span><br><span class="line">$ go mod verify    <span class="comment"># 检查依赖的 hash</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编译和部署"><a href="#编译和部署" class="headerlink" title="编译和部署"></a>编译和部署</h3><h4 id="编译可执行文件"><a href="#编译可执行文件" class="headerlink" title="编译可执行文件"></a>编译可执行文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go build -o=/tmp/foo .         <span class="comment"># 编译当前目录的包 </span></span><br><span class="line">$ go build -o=/tmp/foo ./cmd/foo <span class="comment"># 编译 ./cmd/foo 目录的包 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="编译缓存"><a href="#编译缓存" class="headerlink" title="编译缓存"></a>编译缓存</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go env GOCACHE                 <span class="comment"># 检查你的编译缓存存放目录 </span></span><br><span class="line">$ go build -a -o=/tmp/foo .      <span class="comment"># 强制重编译所有包 </span></span><br><span class="line">$ go clean -cache                <span class="comment"># 清除缓存 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go list -deps . | sort -u      <span class="comment"># 列出用于编译可执行文件的所有包 </span></span><br><span class="line">$ go build -a -x -o=/tmp/foo .   <span class="comment"># 重建所有内容并显示运行的命令 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ GOOS=linux GOARCH=amd64 go build -o=/tmp/linux_amd64/foo . </span><br><span class="line">$ GOOS=windows GOARCH=amd64 go build -o=/tmp/windows_amd64/foo.exe . </span><br><span class="line">$ go tool dist list              <span class="comment"># 列出所有支持的操作系统和CPU架构</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用编译器和链接器-flags"><a href="#使用编译器和链接器-flags" class="headerlink" title="使用编译器和链接器 flags"></a>使用编译器和链接器 flags</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go tool compile -<span class="built_in">help</span>                       <span class="comment"># 查看编译器可用的 flag </span></span><br><span class="line">$ go build -gcflags=<span class="string">&quot;-m -m&quot;</span> -o=/tmp/foo .     <span class="comment"># 打印有关优化决策的信息 </span></span><br><span class="line">$ go build -gcflags=<span class="string">&quot;all=-m&quot;</span> -o=/tmp/foo .    <span class="comment"># 打印包括依赖的优化决策信息 </span></span><br><span class="line">$ go build -gcflags=<span class="string">&quot;all=-N -l&quot;</span> -o=/tmp/foo . <span class="comment"># 禁用优化和内联 </span></span><br><span class="line">$ go tool link -<span class="built_in">help</span>                          <span class="comment"># 查看链接器可用的 flag </span></span><br><span class="line">$ go build -ldflags=<span class="string">&quot;-X main.version=1.2.3&quot;</span> -o=/tmp/foo . <span class="comment"># 增加版本信息 </span></span><br><span class="line">$ go build -ldflags=<span class="string">&quot;-s -w&quot;</span> -o=/tmp/foo .                 <span class="comment"># 从二进制文件中删除调试信息 </span></span><br><span class="line">$ CGO_ENABLE=0 GOOS=linux go build -a -ldflags <span class="string">&#x27;-extldflags &quot;-static&quot;&#x27;</span> . <span class="comment"># 使二进制文件尽可能静态</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="问题诊断和优化"><a href="#问题诊断和优化" class="headerlink" title="问题诊断和优化"></a>问题诊断和优化</h3><h4 id="运行和比较基准测试"><a href="#运行和比较基准测试" class="headerlink" title="运行和比较基准测试"></a>运行和比较基准测试</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -bench=. ./...                                  <span class="comment"># 运行所有测试和基准测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=. ./...                          <span class="comment"># 只运行所有的基准测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ ./...             <span class="comment"># 只运行 BenchmarkFoo 基准测试 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -benchmem ./...                        <span class="comment"># 强制将内存分配统计信息包含在输出中 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -benchtime=5s ./...                    <span class="comment"># 运行每个基准测试至少5秒钟 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -benchtime=500x ./...                  <span class="comment"># 保证每个基准测试精确进行500次迭代 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -count=3 ./...                         <span class="comment"># 重复每个基准测试3次 </span></span><br><span class="line">$ go <span class="built_in">test</span> -bench=. -cpu=1,4,8 ./....                      <span class="comment"># 将GOMAXPROCS设置为1、4和8运行基准测试 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="比较基准测试的变化"><a href="#比较基准测试的变化" class="headerlink" title="比较基准测试的变化"></a>比较基准测试的变化</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /tmp                                                 <span class="comment"># 安装 benchcmp 工具 </span></span><br><span class="line">$ GO111MODULE=on go get golang.org/x/tools/cmd/benchcmp </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=. -benchmem ./... &gt; /tmp/old.txt <span class="comment"># 进行一些修改、优化 </span></span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=. -benchmem ./... &gt; /tmp/new.txt </span><br><span class="line">$ benchcmp /tmp/old.txt /tmp/new.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="Profiling-and-Tracing"><a href="#Profiling-and-Tracing" class="headerlink" title="Profiling and Tracing"></a>Profiling and Tracing</h3><h4 id="运行和比较基准测试-1"><a href="#运行和比较基准测试-1" class="headerlink" title="运行和比较基准测试"></a>运行和比较基准测试</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -cpuprofile=/tmp/cpuprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -memprofile=/tmp/memprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -blockprofile=/tmp/blockprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -mutexprofile=/tmp/mutexprofile.out . </span><br><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -o=/tmp/foo.test -cpuprofile=/tmp/cpuprofile.out . </span><br><span class="line">$ go tool pprof -http=:5000 /tmp/cpuprofile.out                    <span class="comment"># 在浏览器中审查 </span></span><br><span class="line">$ go tool pprof --nodefraction=0.1 -http=:5000 /tmp/cpuprofile.out <span class="comment"># 忽略小于 10% 的节点</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Tracing-生成"><a href="#Tracing-生成" class="headerlink" title="Tracing 生成"></a>Tracing 生成</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go <span class="built_in">test</span> -run=^$ -bench=^BenchmarkFoo$ -trace=/tmp/trace.out . </span><br><span class="line">$ go tool trace /tmp/trace.out <span class="comment"># 目前只在 Chrome/Chromium 可用</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="竞态条件检查"><a href="#竞态条件检查" class="headerlink" title="竞态条件检查"></a>竞态条件检查</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go build -race -o=/tmp/foo .         <span class="comment"># 别用于生产环境 </span></span><br><span class="line">$ GORACE=<span class="string">&quot;log_path=/tmp/race&quot;</span> /tmp/foo <span class="comment"># 输出到文件而不是标准错误</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="依赖管理（Module）"><a href="#依赖管理（Module）" class="headerlink" title="依赖管理（Module）"></a>依赖管理（Module）</h3><h4 id="项目依赖更新"><a href="#项目依赖更新" class="headerlink" title="项目依赖更新"></a>项目依赖更新</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go list -m -u github.com/alecthomas/chroma  <span class="comment"># 检查该库是否有新版本 </span></span><br><span class="line">$ go list -m -u all                           <span class="comment"># 更新项目所有依赖 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="依赖升级或降级"><a href="#依赖升级或降级" class="headerlink" title="依赖升级或降级"></a>依赖升级或降级</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go get github.com/foo/bar@latest            <span class="comment"># 最新版本 </span></span><br><span class="line">$ go get github.com/foo/bar@v1.2.3            <span class="comment"># 特定版本 v1.2.3 </span></span><br><span class="line">$ go get github.com/foo/bar@7e0369f           <span class="comment"># 到特定提交 </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="运行所有包的全部测试检验不兼容性"><a href="#运行所有包的全部测试检验不兼容性" class="headerlink" title="运行所有包的全部测试检验不兼容性"></a>运行所有包的全部测试检验不兼容性</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go mod tidy $ go <span class="built_in">test</span> all</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用依赖的本地版本"><a href="#使用依赖的本地版本" class="headerlink" title="使用依赖的本地版本"></a>使用依赖的本地版本</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go mod edit -replace=github.com/alexedwards/argon2id=/home/alex/code/argon2id <span class="comment"># 创建 replace 规则 </span></span><br><span class="line">$ go mod edit -dropreplace=github.com/alexedwards/argon2id                      <span class="comment"># 删除 replace 规则</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h3><h4 id="升级代码到-Go-新版本"><a href="#升级代码到-Go-新版本" class="headerlink" title="升级代码到 Go 新版本"></a>升级代码到 Go 新版本</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go fix ./... </span><br></pre></td></tr></table></figure>
+
+<h4 id="报告-Bug"><a href="#报告-Bug" class="headerlink" title="报告 Bug"></a>报告 Bug</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go bug <span class="comment"># 会打开浏览器，定位 Go 代码仓库的 issue 页面</span></span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>Proxmox VE (pve)</title>
+    <url>/posts/2955167345/</url>
+    <content><![CDATA[<h3 id="虚拟机扩容"><a href="#虚拟机扩容" class="headerlink" title="虚拟机扩容"></a>虚拟机扩容</h3><h4 id="第一步、PVE扩容"><a href="#第一步、PVE扩容" class="headerlink" title="第一步、PVE扩容"></a>第一步、PVE扩容</h4><p>进入pve后台</p>
+<p>服务器视图-&gt;对应的服务器-&gt;硬盘-&gt;Disk Action</p>
+<p><img src="https://yuako.oss-cn-beijing.aliyuncs.com/img/image-20221118173140832.png" alt="image-20221118173140832"></p>
+<p>选择需要扩容的大小</p>
+<p><img src="https://yuako.oss-cn-beijing.aliyuncs.com/img/image-20221118155056000.png" alt="image-20221118155056000"></p>
+<p>重启后进入系统</p>
+<h4 id="第二步、分配空间"><a href="#第二步、分配空间" class="headerlink" title="第二步、分配空间"></a>第二步、分配空间</h4><p>执行<code>fdisk -l</code></p>
+<p><img src="https://yuako.oss-cn-beijing.aliyuncs.com/img/image-20221118164904032.png" alt="image-20221118164904032"></p>
+<p>看到磁盘已经扩容，但是分区没有变化，需要分配新增的磁盘大小到分区上</p>
+<p>执行<code>parted /dev/sda</code></p>
+<p><img src="https://yuako.oss-cn-beijing.aliyuncs.com/img/image-20221118165431829.png" alt="image-20221118165431829"></p>
+<p><code>resizepart 2 100%</code>是把剩余空间全部分配</p>
+<h4 id="第三步、更新物理卷"><a href="#第三步、更新物理卷" class="headerlink" title="第三步、更新物理卷"></a>第三步、更新物理卷</h4><p><img src="https://yuako.oss-cn-beijing.aliyuncs.com/img/image-20221118165619867.png" alt="image-20221118165619867"></p>
+<p><code>pvresize /dev/sda2</code></p>
+<h4 id="第四步、更新逻辑卷"><a href="#第四步、更新逻辑卷" class="headerlink" title="第四步、更新逻辑卷"></a>第四步、更新逻辑卷</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lvresize --extents +100%FREE --resizefs /dev/mapper/centos-root</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>devops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go上下文</title>
+    <url>/posts/1311315085/</url>
+    <content><![CDATA[<p>Context（即上下文）是常用的并发控制技术，可以控制一组多级的goroutine。<br>Context 仅仅是一个接口定义，跟据实现的不同，可以衍生出不同的context类型。</p>
+<p>上下文有下面四种类型</p>
+<h4 id="1、WithCancel"><a href="#1、WithCancel" class="headerlink" title="1、WithCancel"></a>1、WithCancel</h4><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ctx, cancel := context.WithCancel(context.Background())</span><br><span class="line">	<span class="keyword">go</span> HandelRequest(ctx)</span><br><span class="line">	time.Sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">	cancel()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、WithDeadline"><a href="#2、WithDeadline" class="headerlink" title="2、WithDeadline"></a>2、WithDeadline</h4><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	now := time.Now()</span><br><span class="line">	<span class="comment">//3秒后自动过期</span></span><br><span class="line">	<span class="comment">//WithDeadline其实跟WithTimeout一样，只是传入的参数不一样，</span></span><br><span class="line">	<span class="comment">//一个是具体时间，一个是相对时间，通常来说使用WithTimeout就足够</span></span><br><span class="line">	ctx, cancel := context.WithDeadline(context.Background(), now.Add(<span class="number">3</span>*time.Second))</span><br><span class="line">	<span class="keyword">go</span> HandelRequest(ctx)</span><br><span class="line">	time.Sleep(<span class="number">3</span> * time.Second)</span><br><span class="line">	cancel()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、WithTimeout"><a href="#3、WithTimeout" class="headerlink" title="3、WithTimeout"></a>3、WithTimeout</h4><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ctx, cancel := context.WithTimeout(context.Background(), <span class="number">5</span>*time.Second)</span><br><span class="line">	<span class="keyword">go</span> HandelRequest(ctx)</span><br><span class="line">	time.Sleep(<span class="number">10</span> * time.Second)</span><br><span class="line">	cancel()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、WithValue"><a href="#4、WithValue" class="headerlink" title="4、WithValue"></a>4、WithValue</h4><p>作用是可以传递参数给到其他goroutine</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ctx := context.WithValue(context.Background(), <span class="string">&quot;id&quot;</span>, <span class="string">&quot;1&quot;</span>)</span><br><span class="line">	<span class="keyword">go</span> HandelRequest(ctx)</span><br><span class="line">	time.Sleep(<span class="number">10</span> * time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HandelRequest</span><span class="params">(ctx context.Context)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> &lt;-ctx.Done():</span><br><span class="line">			fmt.Println(<span class="string">&quot;HandelRequest Done.&quot;</span>)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			fmt.Println(<span class="string">&quot;HandelRequest running, parameter: &quot;</span>, ctx.Value(<span class="string">&quot;parameter&quot;</span>))</span><br><span class="line">			time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>golang关键字defer使用</title>
+    <url>/posts/4082217715/</url>
+    <content><![CDATA[<h3 id="defer关键词规则"><a href="#defer关键词规则" class="headerlink" title="defer关键词规则"></a>defer关键词规则</h3><ul>
+<li>规则一：延迟函数的参数在defer语句出现时就已经确定下来了（因为会有拷贝）</li>
+<li>规则二：延迟函数执行按后进先出顺序执行，即先出现的defer最后执行（filo，栈操作）</li>
+<li>规则三：延迟函数可能操作主函数的”具名”返回值<ul>
+<li>对于指针类型参数，规则仍然适用，只不过延迟函数的参数是一个地址值，</li>
+<li>这种情况下，defer后面的语句对变量的修改可能会影响延迟函数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">variableDemo1</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++ &#123;</span><br><span class="line">		<span class="comment">//i会进行一次拷贝到t，所以能正常打印数据</span></span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;t = %d \n&quot;</span>, t)</span><br><span class="line">		&#125;(i)</span><br><span class="line"></span><br><span class="line">		<span class="comment">//这里只会输出6，因为i在defer已经执行完循环，i指向都是最终值</span></span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;t2 = %d \n&quot;</span>, i)</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回前执行defer，此时t=2，++后返回3</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnVariableDemo1</span><span class="params">()</span> <span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		t++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回前执行defer，但是无法赋值结果，无返回t变量，返回的是2</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnVariableDemo2</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	t := <span class="number">2</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		t++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">variableDemo2</span><span class="params">()</span> <span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">//这里传入的t是初始值只0，defer开始时就拷贝0到i，第二个输出t是ret前赋值为2，所以是2</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;variableDemo2 i = &quot;</span>, i) <span class="comment">// 0</span></span><br><span class="line">		fmt.Println(<span class="string">&quot;variableDemo2 t = &quot;</span>, t) <span class="comment">// 2</span></span><br><span class="line">	&#125;(t)</span><br><span class="line">	t = <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>defer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>缓存系统的三大问题</title>
+    <url>/posts/173324241/</url>
+    <content><![CDATA[<h3 id="一、缓存穿透"><a href="#一、缓存穿透" class="headerlink" title="一、缓存穿透"></a>一、缓存穿透</h3><ul>
+<li>数据库和缓存中都没有数据，用户每次查询都查询数据库但是没法写入到缓存</li>
+<li>查询的KEY不存在，例如id:-1</li>
+</ul>
+<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><ul>
+<li>过滤不正常的参数key</li>
+<li>将查询空的结果设置短时间的key-null缓存</li>
+</ul>
+<h3 id="二、缓存击穿"><a href="#二、缓存击穿" class="headerlink" title="二、缓存击穿"></a>二、缓存击穿</h3><ul>
+<li>数据库中有数据，但是缓存没有，首次请求或者是缓存的KEY过期</li>
+</ul>
+<h4 id="解决方法：-1"><a href="#解决方法：-1" class="headerlink" title="解决方法："></a>解决方法：</h4><ul>
+<li>限流、熔断、降级</li>
+<li>key不过期（注意使用）</li>
+<li>佈隆过滤器，快速查询key是否存在</li>
+<li>互斥锁（常用）</li>
+</ul>
+<h3 id="三、缓存雪崩"><a href="#三、缓存雪崩" class="headerlink" title="三、缓存雪崩"></a>三、缓存雪崩</h3><ul>
+<li>缓存中大批量数据过期</li>
+</ul>
+<h4 id="解决方法：-2"><a href="#解决方法：-2" class="headerlink" title="解决方法："></a>解决方法：</h4><ul>
+<li>缓存数据随机时间</li>
+<li>分散缓存到不同缓存系统</li>
+<li>key不过期</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 缓存的key</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> loader lambda方法，通过这个方法获取数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">(String key, Callable&lt;? extends T&gt; loader)</span> </span>&#123;</span><br><span class="line">    String cache = redisHelper.get(key);</span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isNotBlank(cache)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;null&quot;</span>.equals(cache)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> JSONObject.parseObject(cache, <span class="keyword">this</span>.entityClass);</span><br><span class="line">    &#125;</span><br><span class="line">    String lockKey = <span class="string">&quot;lock:&quot;</span> + key;</span><br><span class="line">    String lockVal = String.valueOf(RandomUtils.nextInt(<span class="number">1000</span>, <span class="number">9999</span>));</span><br><span class="line">    <span class="comment">//通过加锁防止击穿</span></span><br><span class="line">    <span class="keyword">if</span> (redisHelper.lock(lockKey, lockVal, <span class="number">3</span>, TimeUnit.SECONDS)) &#123;</span><br><span class="line">        <span class="comment">// 通过回调方式调用获取数据</span></span><br><span class="line">        T entity = loader.call();</span><br><span class="line">        <span class="keyword">if</span> (entity != <span class="keyword">null</span>) &#123;</span><br><span class="line">            redisHelper.set(key, JsonHelper.toJson(entity), RandomUtils.nextInt(<span class="number">3600</span>, <span class="number">7200</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//防止缓存穿透</span></span><br><span class="line">            redisHelper.set(key, <span class="string">&quot;null&quot;</span>, <span class="number">10</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        redisHelper.unlock(lockKey, lockVal);</span><br><span class="line">        <span class="keyword">return</span> entity;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        TimeUnit.MILLISECONDS.sleep(RandomUtils.nextInt(<span class="number">100</span>, <span class="number">200</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.get(key, loader);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>cache</tag>
+      </tags>
+  </entry>
+</search>
